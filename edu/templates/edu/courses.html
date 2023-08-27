@@ -1,0 +1,49 @@
+{% extends 'edu/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="gaming-library">
+        <div class="col-lg-12">
+        <div class="heading-section">
+            <h4>Барлық <em>курстар</em></h4>
+        </div>
+        {% for course in courses %}
+            <div class="item">
+                <ul>
+                <li><img src="{% static 'edu/images/game-03.jpg' %}" alt="" class="templatemo-item"></li>
+                <li><h4>{{course.title}}</h4><span>Python</span></li>
+                <li><h4>Курс мұғалімі </h4><span>{{course.teacher.first_name}} {{course.teacher.last_name}}</span></li>
+                <li><h4>Курс ұзақтығы</h4><span>20 сағат </span></li>
+                <li><h4>Оқушылар саны</h4><span>200</span></li>
+                <li><div class="main-border-button"><a href="{% url 'get_course' course.id %}">Толығырақ</a></div></li>
+                </ul>
+            </div>
+        {% endfor %}
+        <!-- <div class="item">
+            <ul>
+            <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
+            <li><h4>Fortnite</h4><span>Sandbox</span></li>
+            <li><h4>Date Added</h4><span>22/06/2036</span></li>
+            <li><h4>Hours Played</h4><span>740 H 52 Mins</span></li>
+            <li><h4>Currently</h4><span>Downloaded</span></li>
+            <li><div class="main-border-button"><a href="#">Donwload</a></div></li>
+            </ul>
+        </div> -->
+        <!-- <div class="item last-item">
+            <ul>
+            <li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
+            <li><h4>CS-GO</h4><span>Sandbox</span></li>
+            <li><h4>Date Added</h4><span>21/04/2036</span></li>
+            <li><h4>Hours Played</h4><span>892 H 14 Mins</span></li>
+            <li><h4>Currently</h4><span>Downloaded</span></li>
+            <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+            </ul>
+        </div> -->
+        </div>
+        <div class="col-lg-12">
+        <div class="main-button">
+            <a href="{% url 'get_profile' %}">Менің курстарым</a>
+        </div>
+        </div>
+    </div>
+  <!-- ***** Gaming Library End ***** -->
+{% endblock %}

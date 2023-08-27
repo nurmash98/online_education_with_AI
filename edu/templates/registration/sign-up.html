@@ -1,92 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Login and Registration Form</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@200&family=Source+Code+Pro:wght@300;400&display=swap" rel="stylesheet"> 
-  <style>
-    body {
-      background-color: #1f2122;
-      color: #666;
-      font-family: 'Source Code Pro', monospace;
-    }
-    .narrow-container {
-      width: 70%;  /* Устанавливаем ширину контейнера */
-      background-color: #27292a;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 50px auto;  /* Выравниваем по центру */
-    }
-    .btn-primary {
-      background-color: #e75e8d;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="narrow-container">
-    <!-- Registration Form -->
-    <form method = "post">
-      {% csrf_token %}
-      <h2 class="text-center mt-5" style = "color: #e75e8d">Тіркелу</h2>
-      <div class="form-group">
-        <label>Атыңыз</label>
-        {{form.first_name}}
-        {{form.first_name.errors}}
-      </div> 
-      <div class="form-group">
-        <label>Тегіңіз</label>
-        {{form.last_name}}
-        {{form.last_name.errors}}
-      </div> 
-      <div class="form-group">
-        <label>Телефон номеріңіз</label>
-        {{form.phone_number}}
-        {{form.phone_number.errors}}
+{% extends 'edu/base.html' %}
+
+{% block content %}
+<div class="most-popular">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="heading-section text-center">
+        <h4> Тіркелу</h4>
       </div>
-    
-      <div class="form-group">
-        <label>Құпиясөз</label>
-        {{form.password1}}
-        <p style = "color: red">{{form.password1.errors}}</p>
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="item">
+            <form method = "post" id="login-form">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                <label>Аты</label>
+                {{form.first_name}}
+                {{form.first_name.errors}}
+              </div> 
+              <div class="form-group">
+                <label>Тегі</label>
+                {{form.last_name}}
+                {{form.last_name.errors}}
+              </div> 
+              <div class="form-group">
+                <label>Телефон номер</label>
+                {{form.phone_number}}
+                {{form.phone_number.errors}}
+              </div>
+              <div class="form-group">
+                <label>Логин</label>
+                {{form.username}}
+                {{form.username.errors}}
+              </div>
+              <div class="form-group">
+                <label>Құпиясөз</label>
+                {{form.password1}}
+                <p style = "color: red">{{form.password1.errors}}</p>
+              </div>
+              <div class="form-group">
+                <label>Құпиясөз</label>
+                {{form.password2}}
+                <p style = "color: red">{{form.password2.errors}}</p>
+              </div>
+              <br>
+              <div class="main-border-button text-center">
+                <button type="submit" class="btn btn-primary">Тіркелу</button>
+              </div>
+            </form>
+            
+          </div>
+          
+          
+          <div class = "text-center">
+            <p>Тіркеліп қойсаңыз <a href="/edu/sign-in/">Кіру</a></p>
+          </div>
+          
+        </div>
       </div>
-      <div class="form-group">
-        <label>Құпиясөзді қайталаңыз</label>
-        {{form.password2}}
-        <p style = "color: red">{{form.password2.errors}}</p>
-      </div>
-      <button type="submit" class="btn btn-primary">Тіркелу</button>
-      <p class="mt-3" style = "color: white">Уже тіркеліп қойсаңыз <a href="/edu/sign-in/" id="show-registration">Кіру</a></p>
-    </form>
+    </div>
   </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-     const phoneInput = document.getElementById('phone');
-     
-     phoneInput.addEventListener('input', function(e) {
-       let value = this.value.replace(/[^\d]/g, '');
-       let prevLength = this.value.length;
-       let caretPos = this.selectionStart;
-
-       if(value.length > 11) {
-         value = value.slice(0, 11);
-       }
-       
-       this.value = value.replace(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,4})/, function(_, a, b, c, d) {
-         return '+7' + (b ? '-' + b : '') + (c ? '-' + c : '') + (d ? '-' + d : '');
-       });
-
-       if (this.value.length !== prevLength) {
-         caretPos++;
-       }
-
-       if (this.value[caretPos - 1] === '-') {
-         caretPos++;
-       }
-
-       this.setSelectionRange(caretPos, caretPos);
-     });
-   });
- </script>
-</body>
-</html>
+</div>
+{% endblock %}
+  
