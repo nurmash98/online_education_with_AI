@@ -9,5 +9,6 @@ urlpatterns = [
     path('my_profile/', views.get_profile, name = 'get_profile'),
     path('courses/', views.get_courses, name = 'get_courses'),
     path('chat/', views.get_chat, name = 'get_openai_chat'),
-    path('courses/<int:course_id>/', views.get_course, name = 'get_course'),
+    path('courses/<int:course_id>/', views.course_detail, name = 'course_detail'),
+    path('teacher/', views.teacher, name = 'teacher')
 ]   

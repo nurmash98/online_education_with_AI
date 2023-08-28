@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, Course, Lesson
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate
 
@@ -42,3 +42,11 @@ class CustomUserLoginForm(AuthenticationForm):
         return self.cleaned_data
     
     
+class CourseForm(forms.ModelForm): 
+    class Meta:
+        model = Course
+        fields = ['title', 'description'] 
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Курстың тақырыбын енгізіңіз'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Курстың сипаттамасын енгізіңіз'}),
+        }

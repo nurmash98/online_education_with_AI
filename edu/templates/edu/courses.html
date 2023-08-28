@@ -12,9 +12,9 @@
                 <li><img src="{% static 'edu/images/game-03.jpg' %}" alt="" class="templatemo-item"></li>
                 <li><h4>{{course.title}}</h4><span>Python</span></li>
                 <li><h4>Курс мұғалімі </h4><span>{{course.teacher.first_name}} {{course.teacher.last_name}}</span></li>
-                <li><h4>Курс ұзақтығы</h4><span>20 сағат </span></li>
-                <li><h4>Оқушылар саны</h4><span>200</span></li>
-                <li><div class="main-border-button"><a href="{% url 'get_course' course.id %}">Толығырақ</a></div></li>
+                <li><h4>Курс ұзақтығы</h4><span>12 апта</span></li>
+                <li><h4>Оқушылар саны</h4><span>{{ course.students.count }}</span></li>
+                <li><div class="main-border-button"><a href="{% url 'course_detail' course.id %}">Толығырақ</a></div></li>
                 </ul>
             </div>
         {% endfor %}

@@ -359,18 +359,17 @@ Header Style
 */
 
 .background-header {
-  background-color: #fff !important;
-  height: 70px!important;
-  position: fixed!important;
-  top: 0!important;
+  background-color: transparent;
+  position: absolute;
+  height: 70px;
+  top: 15px;
   left: 0;
   right: 0;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.15)!important;
+  z-index: 100;
   -webkit-transition: all .5s ease 0s;
   -moz-transition: all .5s ease 0s;
   -o-transition: all .5s ease 0s;
   transition: all .5s ease 0s;
-  display: none;
 }
 
 .header-area {
@@ -396,12 +395,15 @@ Header Style
 }
 
 .background-header .main-nav {
-  padding: 0px;
-  background-color: transparent;
+  min-height: 80px;
+  background: transparent;
+  display: flex;
+  padding: 15px 0px;
+  border-radius: 50px;
 }
 
 .header-area .main-nav #search {
-  position: relative;
+  position: fixed;
 }
 
 .header-area .main-nav #search input {
@@ -415,6 +417,29 @@ Header Style
 }
 
 .header-area .main-nav #search i {
+  position: absolute;
+  color: #666;
+  left: 20px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+}
+.background-header .main-nav #search {
+  position: fixed;
+}
+
+.background-header .main-nav #search input {
+  background-color: #27292a;
+  height: 46px;
+  border-radius: 23px;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  padding: 0px 15px 0px 45px;
+}
+
+.background-header .main-nav #search i {
   position: absolute;
   color: #666;
   left: 20px;
@@ -457,11 +482,17 @@ Header Style
 }
 
 .background-header .main-nav .logo {
-  margin-top: 8px;
+  border-right: 1px solid #27292a;
+  flex-basis: 25%;
+  margin-right: 5%;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 
 .background-header .main-nav .logo img {
-  width: 180px;
+  width: 191px;
 }
 
 .header-area .main-nav .nav {
@@ -666,8 +697,8 @@ Header Style
 
 @media (max-width: 1200px) {
   .header-area .main-nav .nav li {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
   .header-area .main-nav:before {
     display: none;
@@ -729,7 +760,16 @@ Header Style
   .header-area .main-nav {
     overflow: hidden;
   }
-  
+  #module-accordion .module-item{
+    background-color: #1e1e1e;
+  }
+
+  .module-title {
+    color: white;
+  }
+  .module-intro {
+    color: white;
+  }
   
 
   .header-area .main-nav .nav {

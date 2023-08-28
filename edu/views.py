@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from .models import Course, Lesson, CustomUser
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
-from .forms import CustomUserCreationForm, CustomUserLoginForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm, CourseForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 def index(request):
@@ -15,7 +16,6 @@ def sign_up(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            
             user = form.save()
             user.backend = 'edu.backends.PhoneNumberBackend'
             group = Group.objects.get(name = "student")
@@ -64,11 +64,37 @@ def get_courses(request):
 def get_chat(request):
     pass
 
-def get_course(request, course_id):
-    if request.method == 'GET':
-        course = get_object_or_404(Course.objects.prefetch_related('course_lesson'), id=course_id)
+def course_detail(request, course_id):
+    course = get_object_or_404(Course.objects.prefetch_related('course_lesson'), id=course_id)
+    user = request.user
+    is_enrolled = course.students.filter(id=user.id).exists()
+    if request.method == 'POST':
+        course.students.add(user)
+        return HttpResponseRedirect(reverse('course_detail', args=[course_id]))
+    
+    for lesson in course.course_lesson.all():
+        lesson.video_url = "https://www.youtube.com/embed/" + lesson.video_url[-11:]
+    return render(request, 'edu/course_detail.html', {'course' : course, 'is_enrolled': is_enrolled})
+    
 
-        for lesson in course.course_lesson.all():
-            lesson.video_url = "https://www.youtube.com/embed/" + lesson.video_url[-11:]
-        return render(request, 'edu/course_detail.html', {'course' : course})
+@login_required    
+def teacher(request):
+    teacher = request.user
+    courses_of_teacher = Course.objects.filter(teacher=teacher).order_by('-created_at')
+    form = CourseForm()
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.teacher = teacher 
+            course.save()  
+            return HttpResponseRedirect(reverse('get_courses'))
+    return render(request, 'edu/teacher.html', {'form' : form, 'courses' : courses_of_teacher})
+    
+
+        
+
+
+   
+
     

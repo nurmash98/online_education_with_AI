@@ -1,6 +1,6 @@
 {% extends 'edu/base.html' %}
 {% block content %}
-  <h4 class="text-center mb-4">Курс жайлы</h4>
+  <h4 class="text-center mb-4">Курс программасы</h4>
 			            
 	<div class="accordion module-accordion" id="module-accordion">
 	  <div class="module-item card">
@@ -49,8 +49,20 @@
     </div>
   <br>
   <div class="main-border-button text-center">
-    <a href = "#">Курсқа жазылу </a>
-  </div>    
+    {% if is_enrolled %}
+      <a href="">Жазылдыңыз</a>
+    {% else %}
+  <div class="main-button">
+  <form method="post">
+    {% csrf_token %}
+    
+  
+   
+      <div class="main-border-button text-center"> 
+        <button type = "submit">Курсқа жазылу </button>
+      </div>    
+  </form>
+  {% endif %}
   {% endblock %}
   
   	<!-- Video Modal -->
