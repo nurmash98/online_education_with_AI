@@ -61,7 +61,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                     <ul class="nav">
                         <li><a href="{% url 'get_index' %}" {% if request.path == "/edu/" %}class="active"{% endif %}>#Негізгі</a></li>
                         <li><a href="{% url 'get_courses' %}" {% if request.path == "/edu/courses/" %}class="active"{% endif %}>#Курстар</a></li>
-                        <li><a href="{% url 'get_openai_chat' %}" {% if request.path == "/edu/chat" %}class="active"{% endif %}>#ЖИ арқылы оқу</a></li>
+                        <li><a href="{% url 'chat' %}" {% if request.path == "/edu/chat" %}class="active"{% endif %}>#ЖИ арқылы оқу</a></li>
                         
                         {% if user.is_authenticated %}
                           {% for group in user.groups.all %}
@@ -90,7 +90,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
   <!-- ***** Header Area End ***** -->
 
-  <div class="container">
+  
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
@@ -98,7 +98,7 @@ https://templatemo.com/tm-579-cyborg-gaming
         </div>
       </div>
     </div>
-  </div>
+
 
           <!-- ***** Banner End ***** -->
 

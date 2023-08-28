@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from .models import Course, Lesson, CustomUser
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
-from .forms import CustomUserCreationForm, CustomUserLoginForm, CourseForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm, CourseForm, LessonForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, permission_required
@@ -68,13 +68,26 @@ def course_detail(request, course_id):
     course = get_object_or_404(Course.objects.prefetch_related('course_lesson'), id=course_id)
     user = request.user
     is_enrolled = course.students.filter(id=user.id).exists()
-    if request.method == 'POST':
+    course_role = None
+    form = LessonForm()
+    if course.teacher == user:
+        course_role = 'teacher'
+    elif is_enrolled:
+        course_role = 'student'
+    if request.method == 'POST' and course_role == 'teacher':
+        print ("Added Lesson")
+        form = LessonForm(request.POST)
+        lesson = form.save(commit=False)
+        lesson.course = course
+        lesson.save()
+        return HttpResponseRedirect(reverse('course_detail', args=[course_id]))
+    elif request.method == 'POST' and course_role == None:
         course.students.add(user)
         return HttpResponseRedirect(reverse('course_detail', args=[course_id]))
     
     for lesson in course.course_lesson.all():
         lesson.video_url = "https://www.youtube.com/embed/" + lesson.video_url[-11:]
-    return render(request, 'edu/course_detail.html', {'course' : course, 'is_enrolled': is_enrolled})
+    return render(request, 'edu/course_detail.html', {'course' : course, 'course_role': course_role, 'form' : form})
     
 
 @login_required    
@@ -91,8 +104,9 @@ def teacher(request):
             return HttpResponseRedirect(reverse('get_courses'))
     return render(request, 'edu/teacher.html', {'form' : form, 'courses' : courses_of_teacher})
     
-
-        
+@login_required
+def chat(request):
+    return render(request, 'edu/chat.html')
 
 
    

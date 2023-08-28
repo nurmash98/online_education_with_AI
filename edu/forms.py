@@ -50,3 +50,12 @@ class CourseForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Курстың тақырыбын енгізіңіз'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Курстың сипаттамасын енгізіңіз'}),
         }
+
+class LessonForm(forms.ModelForm):
+    class Meta:
+        model = Lesson
+        fields = ['title', 'video_url']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Сабақтың тақырыбын енгізіңіз'}),
+            'video_url': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ютубтағы видеоның сілтемесі'}),
+        }

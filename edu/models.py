@@ -43,10 +43,9 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     video_url = models.CharField(max_length=200)
     course = models.ForeignKey(Course, related_name="course_lesson", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
-
