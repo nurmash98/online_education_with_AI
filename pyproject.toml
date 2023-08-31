@@ -9,6 +9,9 @@ packages = [{include = "online_education_with_ai"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^4.2.4"
+requests = "^2.31.0"
+python-dotenv = "^1.0.0"
+openai = "^0.27.10"
 
 
 [build-system]

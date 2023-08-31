@@ -1,18 +1,57 @@
 {% extends 'edu/base.html' %}
 {% block content %}
+<style>
+    #messages {
+        border: 1px solid #ccc;
+        overflow-y: scroll;
+    }
+    .user-message {
+        color: rgb(206, 206, 206);
+        font-weight: bold;
+    }
+    .bot-message {
+        color: rgb(255, 255, 255);
+        font-weight: bold;
+    }
+    #loading {
+        display: none;
+    }
+</style>
     <div class="container">
         <div class="chat-box">
             <div class="chat-header">
                 Жасанды интеллектімен чат
             </div>
-            <div class="chat-content">
-                <!-- Сюда добавляются сообщения -->
+            <div class="chat-content" id = "messages">
+                <div id="loading">Күте тұрыңыз жауап беріп жатырмын...</div>
             </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Бүгін қандай курсты оқисыз...">
-                <button>Send</button>
+            
+            <div class="chat-input" >
+                <input type="text" id = "question" placeholder="Бүгін қандай курсты оқисыз...">
+                <button onclick="askGPT3()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
+           
         </div>
     </div>
+    <script>
+        function askGPT3() {
+            // Show loading indicator
+            document.getElementById("loading").style.display = "block";
+            
+            let question = document.getElementById("question").value;
+            document.getElementById("question").value = "";
+            messages.innerHTML += `<div class="user-message">{{user.username}}: ${question}</div>`;
+            fetch(`ask/${question}`)
+                .then(response => response.json())
+                .then(data => {
+                    let messages = document.getElementById("messages");
+                    
+                    messages.innerHTML += `<div class="bot-message">ЖИ оқытушы: ${data.answer}</div>`;
+
+                    // Hide loading indicator
+                    document.getElementById("loading").style.display = "none";
+                });
+        }
+    </script>
 
 {% endblock %}

@@ -10,5 +10,6 @@ urlpatterns = [
     path('courses/', views.get_courses, name = 'get_courses'),
     path('courses/<int:course_id>/', views.course_detail, name = 'course_detail'),
     path('teacher/', views.teacher, name = 'teacher'),
-    path('chat/', views.chat, name='chat')
+    path('chat/', views.chat, name='chat'),
+    path('chat/ask/<str:question>', views.ask_gpt3, name='ask_gpt3'),
 ]   

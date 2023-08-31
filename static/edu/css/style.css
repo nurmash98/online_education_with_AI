@@ -359,17 +359,18 @@ Header Style
 */
 
 .background-header {
-  background-color: transparent;
-  position: absolute;
-  height: 70px;
-  top: 15px;
+  background-color: #fff !important;
+  height: 70px!important;
+  position: fixed!important;
+  top: 0!important;
   left: 0;
   right: 0;
-  z-index: 100;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.15)!important;
   -webkit-transition: all .5s ease 0s;
   -moz-transition: all .5s ease 0s;
   -o-transition: all .5s ease 0s;
   transition: all .5s ease 0s;
+  
 }
 
 .header-area {
@@ -390,16 +391,12 @@ Header Style
   min-height: 80px;
   background: transparent;
   display: flex;
-  padding: 15px 0px;
   border-radius: 50px;
 }
 
 .background-header .main-nav {
-  min-height: 80px;
+  padding: 5px;
   background: transparent;
-  display: flex;
-  padding: 15px 0px;
-  border-radius: 50px;
 }
 
 .header-area .main-nav #search {

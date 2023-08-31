@@ -20,7 +20,16 @@
                     {% for lesson in course.course_lesson.all %}
 									    <div class="module-sub-item p-3">
 										    <div class="row justify-content-between">
-											    <div class="col-9"><span class="theme-text-secondary me-2"></span><a class="video-play-trigger" href="#" data-bs-toggle="modal" data-bs-target="#modal-video{{lesson.id}}">{{ lesson.title }}</a><span class="badge bg-primary ms-2">Көруге рұқсат</span></div>
+											    <div class="col-9">
+                            <span class="theme-text-secondary me-2"></span>
+                            {% if forloop.counter == 1 or course_role == 'teacher' or course_role == 'student' %}
+                              <a class="video-play-trigger" href="#" data-bs-toggle="modal" data-bs-target="#modal-video{{lesson.id}}">{{forloop.counter}}. {{ lesson.title }}</a>
+                              <span class="badge bg-primary ms-2">Көруге рұқсат</span>
+                            {% else %}
+                              <a class="video-play-trigger" href="#" data-bs-toggle="modal">{{forloop.counter}}. {{ lesson.title }}</a>
+                              <span class="badge bg-danger ms-2">Көруге рұқсат жоқ</span>
+                            {% endif %}
+                          </div>
 											    <div class="col-3 text-end extra-info ">
                             {% if course_role == 'teacher' %}
                             <form class = "form-group" method = "POST">

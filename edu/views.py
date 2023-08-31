@@ -7,7 +7,11 @@ from .forms import CustomUserCreationForm, CustomUserLoginForm, CourseForm, Less
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, permission_required
-
+from django.http import JsonResponse
+import requests
+from dotenv import load_dotenv
+import os
+import openai
 # Create your views here.
 def index(request):
     return render(request, 'edu/index.html')
@@ -108,7 +112,47 @@ def teacher(request):
 def chat(request):
     return render(request, 'edu/chat.html')
 
+def ask_gpt3(request, question):
+    load_dotenv()
+    api_key = os.getenv("API_KEY")  
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
 
-   
+    data = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": question}
+        ]
+    }
+    print (question)
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
+
+    if response.status_code == 200:
+        answer = response.json()['choices'][0]['message']['content']
+        return JsonResponse({"answer": answer})
+    else:
+        return JsonResponse({"error": "Could not get an answer"}, status=400)
 
     
+# def ask_gpt3(request, question):
+
+#     load_dotenv()
+#     api_key = os.getenv("API_KEY")
+#     openai.api_key = api_key
+#     try:
+
+#         response = openai.Completion.create(
+#             engine="text-davinci-003",
+#             prompt=question,
+#             temperature=0.6,
+#             max_tokens=150
+#         )
+
+#         reply_content = response.choices[0].text.strip()
+#         return JsonResponse({"answer": reply_content})
+
+#     except openai.Error as e:
+#         return JsonResponse({"answer": "Error"})
